@@ -24,6 +24,9 @@ public class PatientDashboardTest extends WebDriverWrapper {
 			MainPage main=new MainPage(driver);
 			main.moveToPatientClient();
 			main.clickonPatients();
+			
+			//AboutTab
+			
 				
 			//PatientFinderPage
 			PatientFinderPage patient= new PatientFinderPage(driver);
@@ -36,6 +39,15 @@ public class PatientDashboardTest extends WebDriverWrapper {
 			SearchOrAddPatientPage sapPage=new SearchOrAddPatientPage(driver);
 			sapPage.switchToPatFrame();
 			sapPage.titleOfTheName("Ms.");
+			sapPage.fillFirstName("samara");
+			sapPage.fillLastName("Wills");
+			sapPage.selectDOB("2021-06-23");
+			sapPage.selectGender("Female");
+			sapPage.createPatientRecord();
+			sapPage.switchtoDefaultframe();
+			sapPage.switchtoPopupFrame();
+			sapPage.confirmNewPatientbutton();
+			sapPage.switchtoDefaultframe();
 	}
 
 }

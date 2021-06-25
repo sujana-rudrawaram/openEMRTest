@@ -13,18 +13,21 @@ import com.google.openemrpages.MainPage;
 import com.google.openemrpages.PatientDashboardPage;
 import com.google.openemrpages.PatientFinderPage;
 import com.google.openemrpages.SearchOrAddPatientPage;
+import com.google.utilities.DataproviderUtilities;
 
 public class AddpatientpageTest extends WebDriverWrapper {
 	
 	
-	@Test
-	public void AddpatientEmrpageTest()
+	//admin,pass,English (Standard),"Ms.","samara","Wills","2021-06-23","Female","Samara Wills"
+	
+	@Test(dataProvider = "AddpatientEmrpageData", dataProviderClass = DataproviderUtilities.class)
+	public void AddpatientEmrpageTest(String username, String password, String language, String title, String firstname, String lastname, String dob, String gender, String expectedvalue)
 	{
 		//Loginpage
 		Loginpage login = new Loginpage(driver);
-		login.enterUserName("admin");
-		login.enterPassword("pass");
-		login.selectLanguage("English (Standard)");
+		login.enterUserName(username);
+		login.enterPassword(password);
+		login.selectLanguage(language);
 		login.loginButton();
 		
 		//MainPage
@@ -42,11 +45,11 @@ public class AddpatientpageTest extends WebDriverWrapper {
 		//SearchOrAddPatientPage
 		SearchOrAddPatientPage sapPage=new SearchOrAddPatientPage(driver);
 		sapPage.switchToPatFrame();
-		sapPage.titleOfTheName("Ms.");
-		sapPage.fillFirstName("samara");
-		sapPage.fillLastName("Wills");
-		sapPage.selectDOB("2021-06-23");
-		sapPage.selectGender("Female");
+		sapPage.titleOfTheName(title);
+		sapPage.fillFirstName(firstname);
+		sapPage.fillLastName(lastname);
+		sapPage.selectDOB(dob);
+		sapPage.selectGender(gender);
 		sapPage.createPatientRecord();
 		sapPage.switchtoDefaultframe();
 		sapPage.switchtoPopupFrame();
@@ -60,7 +63,7 @@ public class AddpatientpageTest extends WebDriverWrapper {
 		//create method getTextandHandleAlert
 		sapPage.getTextandHandleAlert();
 		sapPage.closeFrame();		
-		Assert.assertEquals(sapPage.verifyPatientAdded(),"Samara Wills");
+		Assert.assertEquals(sapPage.verifyPatientAdded(),expectedvalue);
 	}
 
 }
